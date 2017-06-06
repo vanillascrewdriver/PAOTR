@@ -149,8 +149,8 @@ def create_tree(expression, nodes=[], root=True, vals=None):
     if("|" in expression):
         parts = expression.split("|")
         node = Node(get_name(), "or",
-                    children=[create_tree(x, nodes, root=False) for x in parts if (x.isdigit() or len(x)>1)],
-                    leafs=[Leaf(x, 0, 0) for x in parts if (not(x.isdigit()) and len(x)==1)])
+                    children=[create_tree(x, nodes, root=False) for x in parts if (x.isdigit())],
+                    leafs=[Leaf(x, 0, 0) for x in parts if (not(x.isdigit()))])
     elif("&" in expression):
         parts = expression.split("&")
         node = Node(get_name(), "and",
