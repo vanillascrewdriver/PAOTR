@@ -84,17 +84,6 @@ def short(sizes, node, nodes):
     return sizes
 
 def run(root=None, expression=None, vals=None, out=False):
-    if not(expression) and not(root):
-        random.seed(100)
-        vals = {x:{"probability":random.random(), "cost":random.random()}
-                for val,x in enumerate("abcdefghijklmnopqrstuvwxyz")}
-
-        expression = "a|(b&c&(d|e|(f&g))&(h|i))|(j&k&l&(m|n|((o|p)&(q|r))))"
-        expression = "(((a|b)&(c|d))|((e|f)&(g|h)))&(((i|j)&(k|l))|((m|n)&(o|p)))"
-        
-        print("Original Tree: ")
-        root = tree.create_tree(expression, vals=vals)
-
     root = copy.deepcopy(root)
     
     twin_simplify(root)
@@ -105,7 +94,7 @@ def run(root=None, expression=None, vals=None, out=False):
 
         
     tup = create_tuple(root)
-
+    
     cost = {tuple(0 for node in tup[1]): 0}
     first_test = {(0 for node in tup[1]): None}
     true_arc = {}
@@ -144,7 +133,8 @@ def run(root=None, expression=None, vals=None, out=False):
                         true_arc.update({reduced_tuple:i_pos})
                         false_arc.update({reduced_tuple:i_neg})
 
-    print("Cost: " + str(round(cost.get(tup[0]),7)))
+    return cost.get(tup[0])
+    #print("Cost: " + str(round(cost.get(tup[0]),7)))
 
     def create_strategy(tup, value="F"):
         if([x for x in tup if x > 0]):
@@ -156,7 +146,8 @@ def run(root=None, expression=None, vals=None, out=False):
             node.true = None
             node.false = None
         return node
-    output = create_output(create_strategy(tup[0]), [], 0, "")
+    strat = create_strategy(tup[0])
+    output = create_output(strat, [], 0, "")
 
     if out:
         width = 2**(len(tup[0])+1)-1

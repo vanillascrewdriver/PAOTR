@@ -163,7 +163,7 @@ def create_tree(expression, nodes=[], root=True, vals=None):
         fix_tree(node)
         simplify_tree(node)
         set_leafs(node, vals)
-        print_tree(node)
+        #print_tree(node)
         
     return node
 

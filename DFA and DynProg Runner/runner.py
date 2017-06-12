@@ -9,6 +9,11 @@ def run(expression):
     a = expression.replace("(",",").replace(")",",").replace("|",",").replace("&",",")
     vals = {x:{"probability":random.random(), "cost":random.random()} for x in a.split(",")}
 
+    root = tree.create_tree(expression, vals=vals)
+    cost_DynProg = DynProg.run(root=root, expression=expression, vals=vals)
+    cost_DFA = DFA.run(root=root, expression=expression, vals=vals)
+    
+    '''
     print("Tree:")
     root = tree.create_tree(expression, vals=vals)
 
@@ -22,3 +27,4 @@ def run(expression):
     DFA.run(root=root, expression=expression, vals=vals)
     print("Time Taken: {} seconds".format(time.time()-start))
 
+    '''
