@@ -175,6 +175,7 @@ def fix_tree(node):
         leaf.set_parent(node)
 
 def simplify_tree(node):
+    remove = []
     for child in node.get_children():
         simplify_tree(child)
         if(child.get_function() == node.get_function()):
@@ -182,7 +183,9 @@ def simplify_tree(node):
                 node.add_child_node(grandchild)
             for grandleaf in child.get_leafs():
                 node.add_leaf_node(grandleaf)
-            node.remove_child(child)
+            remove.append(child)
+    for r in remove:
+        node.remove_child(r)
 
 def set_leafs(node, vals=None):
     if(vals):
