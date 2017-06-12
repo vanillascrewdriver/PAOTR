@@ -12,6 +12,7 @@ def run(expression):
     root = tree.create_tree(expression, vals=vals)
     cost_DynProg = DynProg.run(root=root, expression=expression, vals=vals)
     cost_DFA = DFA.run(root=root, expression=expression, vals=vals)
+    return cost_DynProg, cost_DFA
     
     '''
     print("Tree:")
@@ -28,3 +29,4 @@ def run(expression):
     print("Time Taken: {} seconds".format(time.time()-start))
 
     '''
+
