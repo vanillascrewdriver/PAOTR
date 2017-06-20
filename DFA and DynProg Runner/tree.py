@@ -149,8 +149,8 @@ def create_tree(expression, nodes=[], root=True, vals=None):
     if("|" in expression):
         parts = expression.split("|")
         node = Node(get_name(), "or",
-                    children=[create_tree(x, nodes, root=False) for x in parts if (x.isdigit())],
-                    leafs=[Leaf(x, 0, 0) for x in parts if (not(x.isdigit()))])
+                    children=[create_tree(x, nodes, root=False) for x in parts if (x.isdigit() or ("&" in x))],
+                    leafs=[Leaf(x, 0, 0) for x in parts if (not(x.isdigit()) and not("&" in x))])
     elif("&" in expression):
         parts = expression.split("&")
         node = Node(get_name(), "and",
@@ -158,7 +158,7 @@ def create_tree(expression, nodes=[], root=True, vals=None):
                     leafs=[Leaf(x, 0, 0) for x in parts if not(x.isdigit())])
     else:
         node = nodes[int(expression)]
-
+    
     if(root):
         fix_tree(node)
         simplify_tree(node)
@@ -190,6 +190,7 @@ def simplify_tree(node):
 def set_leafs(node, vals=None):
     if(vals):
         for leaf in node.get_leafs():
+            print(leaf.get_name())
             leaf.set_probability(vals.get(leaf.get_name()).get("probability"))
             leaf.set_cost(vals.get(leaf.get_name()).get("cost"))
         for child in node.get_children():
