@@ -120,10 +120,12 @@ class Leaf:
     def set_parent(self, parent):
         self.parent = parent
 
-names = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-
+i = -1
+letters = list("abcdefghijklmnopqrstuvwxyz")
 def get_name():
-    return names.pop(0)
+    global i
+    i += 1
+    return letters[i%26]*(i//26+1)
 
 def mul(lis):
     prod = 1
